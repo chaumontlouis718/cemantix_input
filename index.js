@@ -2,6 +2,10 @@ let loadItem = (item) => window.localStorage.getItem(item);
 let saveItem = (item, value) => window.localStorage.setItem(item, value);
 let lastUpdate = Date.now();
 
+var cemantixScript = [...document.getElementsByTagName("script")].filter((script) => {
+    return script.outerHTML.includes("cemantix.js");
+});
+
 async function getScore(word) {
     try {
         let response = await fetch("/score", {
@@ -49,7 +53,7 @@ function recordGuess(appGame, guess, word, score) {
 }
 
 let appGame = {
-    puzzleNumber: 137,
+    puzzleNumber: cemantixScript[0].outerHTML.match(/puzzleNumber=(\d+)/)[1],
     utcOffset: 7200,
     active: true,
     appTitle: "cémantix",
